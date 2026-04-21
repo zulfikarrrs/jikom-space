@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JIKOM Space — Universitas Nusa Cendana</title>
+  <meta name="description" content="JIKOM Space · Ruang Digital Mahasiswa JIKOM Undana" />
+  <link rel="icon" href="logo undana.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: '#ff7a00', darkhero: '#0d1b2f' },
+          fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui'] },
+        },
+      },
+    };
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root { --primary: #ff7a00; }
+    html { scroll-behavior: smooth; }
+    body { background: #ffffff; }
+    .section-label { color: #d18d4c; letter-spacing: 0.08em; }
+    .section-block { padding-top: 7.5rem; padding-bottom: 7.5rem; scroll-margin-top: 4.5rem; }
+    .hero-light {
+      background:
+        radial-gradient(circle at 14% 18%, rgba(255,122,0,0.2) 0 140px, transparent 280px),
+        radial-gradient(circle at 82% 35%, rgba(13,27,47,0.12) 0 160px, transparent 300px),
+        radial-gradient(rgba(255,255,255,0.9) 1px, transparent 1px), #ffffff;
+      background-size: auto, auto, 16px 16px;
+    }
+    .hero-grid {
+      background-color: #0d1b2f;
+      background-image:
+        radial-gradient(rgba(255,122,0,0.22) 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,0.07) 1px, transparent 1px);
+      background-size: 22px 22px, 22px 22px;
+      background-position: 0 0, 11px 11px;
+    }
+    .nav-link { position: relative; transition: color 0.2s ease; }
+    .nav-link::after {
+      content: ''; position: absolute; left: 0; bottom: -5px;
+      width: 100%; height: 2px; background: var(--primary);
+      transform: scaleX(0); transform-origin: right; transition: transform 0.25s ease;
+    }
+    .nav-link:hover::after { transform: scaleX(1); transform-origin: left; }
+    .clickable { transition: transform 0.12s ease, filter 0.2s ease, box-shadow 0.2s ease; }
+    .clickable:active { transform: translateY(1px) scale(0.985); filter: brightness(0.96); }
+    .card-lift { transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease; }
+    .card-lift:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(15,23,42,0.08); border-color: #e2e8f0; }
+    .tab-btn { position: relative; transition: all 0.2s ease; border: 1px solid #e2e8f0; }
+    .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 10px 22px rgba(255,122,0,0.25); }
+    .content-transition { transition: opacity 0.22s ease, transform 0.22s ease; }
+    .content-hidden { opacity: 0; transform: translateY(8px); }
+    .ring-focus:focus-visible { outline: 2px solid rgba(255,122,0,0.5); outline-offset: 2px; }
+    /* Mobile menu */
+    #mobileMenu { display: none; }
+    #mobileMenu.open { display: block; }
+  </style>
+</head>
+<body class="font-sans antialiased text-slate-800">
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="fixed top-0 left-0 w-full z-50 bg-white/95 backdrop-blur border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="#beranda" class="flex items-center gap-3 ring-focus rounded-md">
+        <img src="logo undana.png" alt="Logo Undana" class="w-9 h-9 rounded-lg object-contain" />
+        <div>
+          <p class="text-[17px] font-bold leading-tight text-slate-900">JIKOM Space</p>
+          <p class="text-[10px] leading-tight text-slate-500">Universitas Nusa Cendana</p>
+        </div>
+      </a>
+      <!-- Desktop nav -->
+      <div class="hidden lg:flex items-center gap-7 text-[12px] font-medium text-slate-700">
+        <a href="#beranda" class="nav-link">Beranda</a>
+        <a href="#berkas" class="nav-link">Berkas</a>
+        <a href="#karya" class="nav-link">Karya</a>
+        <a href="#publish" class="nav-link">Publish</a>
+        <a href="#event" class="nav-link">Event</a>
+        <a href="#belajar" class="nav-link">Belajar</a>
+        <a href="#kontak" class="nav-link">Kontak</a>
+        <a href="#" class="ml-2 px-4 py-1.5 bg-primary text-white rounded-lg text-[11px] font-semibold hover:bg-orange-600 clickable">Login</a>
+      </div>
+      <!-- Mobile hamburger -->
+      <button id="menuBtn" class="lg:hidden p-2 rounded-lg hover:bg-slate-100" aria-label="Menu">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path id="menuIcon" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+    <!-- Mobile dropdown -->
+    <div id="mobileMenu" class="lg:hidden bg-white border-t border-slate-100 px-4 pb-4">
+      <div class="flex flex-col gap-1 pt-3">
+        <a href="#beranda" class="mobile-link px-3 py-2 rounded-lg text-sm font-medium hover:bg-slate-50">Beranda</a>
+        <a href="#berkas" class="mobile-link px-3 py-2 rounded-lg text-sm font-medium hover:bg-slate-50">Berkas</a>
+        <a href="#karya" class="mobile-link px-3 py-2 rounded-lg text-sm font-medium hover:bg-slate-50">Karya</a>
+        <a href="#publish" class="mobile-link px-3 py-2 rounded-lg text-sm font-medium hover:bg-slate-50">Publish</a>
+        <a href="#event" class="mobile-link px-3 py-2 rounded-lg text-sm font-medium hover:bg-slate-50">Event</a>
+        <a href="#belajar" class="mobile-link px-3 py-2 rounded-lg text-sm font-medium hover:bg-slate-50">Belajar</a>
+        <a href="#kontak" class="mobile-link px-3 py-2 rounded-lg text-sm font-medium hover:bg-slate-50">Kontak</a>
+        <a href="#" class="mt-2 px-4 py-2 bg-primary text-white rounded-lg text-sm font-semibold text-center">Login</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="pt-16">
+
+    <!-- ===== HERO ===== -->
+    <section id="beranda" class="section-block hero-light border-b border-slate-100">
+      <div class="max-w-4xl mx-auto px-4 text-center">
+        <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium bg-orange-50 border border-orange-100 text-orange-500 mb-7">
+          Ruang Digital Mahasiswa JIKOM Undana
+        </span>
+        <h1 class="text-5xl md:text-6xl font-extrabold mb-5 leading-tight tracking-tight">
+          <span class="text-primary">JIKOM</span> <span class="text-slate-900">Space</span>
+        </h1>
+        <p class="text-slate-600 text-lg max-w-2xl mx-auto mb-8">
+          Ekosistem digital untuk riset, karya, dan prestasi mahasiswa Ilmu Komunikasi.
+        </p>
+        <div class="flex flex-wrap justify-center gap-3 mb-12">
+          <a href="#fitur" class="px-6 py-2.5 rounded-lg bg-primary text-white text-sm font-semibold hover:bg-orange-600 clickable">Jelajahi Fitur</a>
+          <a href="#berkas" class="px-6 py-2.5 rounded-lg border border-orange-200 text-primary text-sm font-semibold hover:bg-orange-50 clickable">Ajukan Berkas</a>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto">
+          <div><p class="text-4xl font-extrabold text-primary"><span class="counter" data-target="1200">0</span>+</p><p class="text-xs text-slate-500 mt-1">Mahasiswa Aktif</p></div>
+          <div><p class="text-4xl font-extrabold text-primary"><span class="counter" data-target="850">0</span>+</p><p class="text-xs text-slate-500 mt-1">Alumni Tersebar</p></div>
+          <div><p class="text-4xl font-extrabold text-primary"><span class="counter" data-target="300">0</span>+</p><p class="text-xs text-slate-500 mt-1">Karya Terpublikasi</p></div>
+          <div><p class="text-4xl font-extrabold text-primary"><span class="counter" data-target="6">0</span></p><p class="text-xs text-slate-500 mt-1">Fitur Platform</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== STATISTIK ===== -->
+    <section class="section-block hero-grid text-white">
+      <div class="max-w-5xl mx-auto px-4 text-center">
+        <p class="section-label text-xs font-semibold mb-4">JIKOM DALAM ANGKA</p>
+        <h2 class="text-4xl md:text-5xl font-extrabold mb-3">Ilmu Komunikasi Undana</h2>
+        <p class="text-slate-300 max-w-2xl mx-auto text-sm md:text-lg mb-12">Data pencapaian dan perkembangan Program Studi Ilmu Komunikasi Universitas Nusa Cendana Kupang.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <article class="card-lift rounded-xl bg-slate-800/60 border border-slate-700 p-6 text-left">
+            <div class="w-9 h-9 rounded-lg bg-primary/20 text-primary flex items-center justify-center mb-4"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+            <p class="text-5xl font-extrabold text-primary leading-none"><span class="counter" data-target="1200">0</span>+</p>
+            <p class="mt-2 font-semibold text-white">Mahasiswa Aktif</p><p class="text-xs text-slate-400 mt-1">Terdaftar di Program Studi</p>
+          </article>
+          <article class="card-lift rounded-xl bg-slate-800/60 border border-slate-700 p-6 text-left">
+            <div class="w-9 h-9 rounded-lg bg-primary/20 text-primary flex items-center justify-center mb-4"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m22 10-10-5L2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.6 2.7 3 6 3s6-1.4 6-3v-5"/></svg></div>
+            <p class="text-5xl font-extrabold text-primary leading-none"><span class="counter" data-target="850">0</span>+</p>
+            <p class="mt-2 font-semibold text-white">Alumni Tersebar</p><p class="text-xs text-slate-400 mt-1">Di Seluruh Indonesia</p>
+          </article>
+          <article class="card-lift rounded-xl bg-slate-800/60 border border-slate-700 p-6 text-left">
+            <div class="w-9 h-9 rounded-lg bg-primary/20 text-primary flex items-center justify-center mb-4"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M8 13v8l4-2 4 2v-8"/></svg></div>
+            <p class="text-5xl font-extrabold text-primary leading-none"><span class="counter" data-target="300">0</span>+</p>
+            <p class="mt-2 font-semibold text-white">Karya Terpublikasi</p><p class="text-xs text-slate-400 mt-1">Artikel, Video, Desain</p>
+          </article>
+          <article class="card-lift rounded-xl bg-slate-800/60 border border-slate-700 p-6 text-left">
+            <div class="w-9 h-9 rounded-lg bg-primary/20 text-primary flex items-center justify-center mb-4"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg></div>
+            <p class="text-5xl font-extrabold text-primary leading-none"><span class="counter" data-target="6">0</span></p>
+            <p class="mt-2 font-semibold text-white">Fitur Platform</p><p class="text-xs text-slate-400 mt-1">Layanan Digital Terpadu</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FITUR ===== -->
+    <section id="fitur" class="section-block">
+      <div class="max-w-6xl mx-auto px-4">
+        <p class="section-label text-xs font-semibold text-center mb-3">FITUR UTAMA</p>
+        <h2 class="text-4xl md:text-5xl font-extrabold text-center text-slate-900 leading-tight">Semua Kebutuhan Akademik<br/>dalam Satu Platform</h2>
+        <p class="text-center text-slate-500 mt-4 max-w-3xl mx-auto">Dirancang agar akses layanan prodi lebih cepat, jelas, dan mudah dipahami.</p>
+        <div class="grid md:grid-cols-3 gap-4 mt-10">
+          <article class="card-lift bg-white rounded-2xl border border-slate-200 p-6"><div class="text-primary mb-4"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg></div><h3 class="text-xl font-bold">JIKOM Berkas</h3><p class="text-slate-500 mt-3 text-sm">Pengajuan surat akademik secara online dan terpantau.</p><a href="#berkas" class="text-primary text-sm font-semibold mt-5 inline-block clickable">Ajukan Sekarang</a></article>
+          <article class="card-lift bg-white rounded-2xl border border-slate-200 p-6"><div class="text-primary mb-4"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 12h10"/></svg></div><h3 class="text-xl font-bold">JIKOM Karya</h3><p class="text-slate-500 mt-3 text-sm">Etalase prestasi karya mahasiswa yang siap dibagikan.</p><a href="#karya" class="text-primary text-sm font-semibold mt-5 inline-block clickable">Lihat Karya</a></article>
+          <article class="card-lift bg-white rounded-2xl border border-slate-200 p-6"><div class="text-primary mb-4"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg></div><h3 class="text-xl font-bold">JIKOM Publish</h3><p class="text-slate-500 mt-3 text-sm">Publikasi berita dan opini mahasiswa secara profesional.</p><a href="#publish" class="text-primary text-sm font-semibold mt-5 inline-block clickable">Baca Sekarang</a></article>
+          <article class="card-lift bg-white rounded-2xl border border-slate-200 p-6"><div class="text-primary mb-4"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div><h3 class="text-xl font-bold">JIKOM Event</h3><p class="text-slate-500 mt-3 text-sm">Kalender kegiatan dan pengumuman prodi yang dinamis.</p></article>
+          <article class="card-lift bg-white rounded-2xl border border-slate-200 p-6"><div class="text-primary mb-4"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg></div><h3 class="text-xl font-bold">JIKOM Belajar</h3><p class="text-slate-500 mt-3 text-sm">Sumber belajar untuk pengembangan skill komunikasi digital.</p></article>
+          <article class="card-lift bg-white rounded-2xl border border-slate-200 p-6 relative"><span class="absolute top-5 right-5 text-[11px] px-2 py-1 rounded-full bg-amber-100 text-amber-700 font-semibold">Segera Hadir</span><div class="text-primary mb-4"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><h3 class="text-xl font-bold text-slate-500">JIKOM Connect</h3><p class="text-slate-400 mt-3 text-sm">Koneksi alumni dan jejaring profesional mahasiswa.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== BERKAS ===== -->
+    <section id="berkas" class="section-block bg-slate-50">
+      <div class="max-w-6xl mx-auto px-4">
+        <p class="section-label text-xs font-semibold text-center mb-3">JIKOM BERKAS</p>
+        <h2 class="text-4xl md:text-5xl font-extrabold text-center text-slate-900 leading-tight">Ajukan Berkas Akademikmu<br/>dengan Mudah</h2>
+        <p class="text-center text-slate-500 mt-4 max-w-3xl mx-auto">Pengajuan surat digital dengan alur yang jelas dan mudah dilacak.</p>
+        <div class="grid lg:grid-cols-2 gap-8 mt-10">
+          <!-- Kiri -->
+          <div>
+            <h3 class="font-semibold mb-3 text-slate-800">Pilih Jenis Surat</h3>
+            <div id="suratTypes" class="grid grid-cols-2 gap-3 text-sm">
+              <button type="button" data-surat="Surat Magang" class="surat-btn tab-btn active rounded-xl p-4 text-left clickable">Surat Magang</button>
+              <button type="button" data-surat="Surat PKL" class="surat-btn tab-btn rounded-xl p-4 text-left clickable">Surat PKL</button>
+              <button type="button" data-surat="Surat KKN" class="surat-btn tab-btn rounded-xl p-4 text-left clickable">Surat KKN</button>
+              <button type="button" data-surat="Surat Penelitian" class="surat-btn tab-btn rounded-xl p-4 text-left clickable">Surat Penelitian</button>
+            </div>
+            <ul class="mt-6 space-y-2 text-sm text-slate-600">
+              <li class="flex items-center gap-2"><span class="text-primary">✓</span> Proses pengajuan 100% online</li>
+              <li class="flex items-center gap-2"><span class="text-primary">✓</span> Notifikasi status melalui email</li>
+              <li class="flex items-center gap-2"><span class="text-primary">✓</span> Riwayat pengajuan tersimpan</li>
+              <li class="flex items-center gap-2"><span class="text-primary">✓</span> Unduh surat digital saat selesai</li>
+            </ul>
+            <div class="mt-7 bg-white border rounded-2xl p-5">
+              <p class="font-semibold text-sm mb-4">Status Pengajuan</p>
+              <div class="grid grid-cols-3 text-center text-xs gap-2">
+                <div><div class="w-8 h-8 rounded-full bg-primary text-white mx-auto mb-2 flex items-center justify-center font-bold">1</div>Diajukan</div>
+                <div><div class="w-8 h-8 rounded-full bg-slate-200 text-slate-700 mx-auto mb-2 flex items-center justify-center font-bold">2</div>Diproses</div>
+                <div><div class="w-8 h-8 rounded-full bg-slate-200 text-slate-700 mx-auto mb-2 flex items-center justify-center font-bold">3</div>Selesai</div>
+              </div>
+            </div>
+          </div>
+          <!-- Kanan: Form -->
+          <div>
+            <form id="berkasForm" class="bg-white border rounded-2xl p-6 space-y-4">
+              <h3 class="text-xl font-bold text-slate-900">Form Pengajuan Berkas</h3>
+              <p class="text-sm text-slate-500 -mt-2">Isi data dengan benar untuk mempercepat verifikasi.</p>
+              <div>
+                <label class="text-sm font-medium block mb-1">Nama Lengkap <span class="text-red-500">*</span></label>
+                <input name="nama" type="text" required class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:border-orange-400" placeholder="Masukkan nama lengkap kamu" />
+              </div>
+              <div>
+                <label class="text-sm font-medium block mb-1">NIM <span class="text-red-500">*</span></label>
+                <input name="nim" type="text" required class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:border-orange-400" placeholder="Contoh: 2101030001" />
+              </div>
+              <div>
+                <label class="text-sm font-medium block mb-1">Email <span class="text-red-500">*</span></label>
+                <input name="email" type="email" required class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:border-orange-400" placeholder="email@student.undana.ac.id" />
+              </div>
+              <div>
+                <label class="text-sm font-medium block mb-1">Jenis Surat <span class="text-red-500">*</span></label>
+                <select name="jenis" required class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:border-orange-400">
+                  <option value="">Pilih jenis surat</option>
+                  <option value="Surat Magang">Surat Magang</option>
+                  <option value="Surat PKL">Surat PKL</option>
+                  <option value="Surat KKN">Surat KKN</option>
+                  <option value="Surat Penelitian">Surat Penelitian</option>
+                </select>
+              </div>
+              <div>
+                <label class="text-sm font-medium block mb-1">Keterangan / Keperluan</label>
+                <textarea name="keterangan" rows="3" class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:border-orange-400" placeholder="Jelaskan keperluan pengajuan surat..."></textarea>
+              </div>
+              <button type="submit" id="kirimBtn" class="w-full rounded-lg bg-primary hover:bg-orange-600 text-white font-semibold py-2.5 clickable flex items-center justify-center gap-2">
+                <span id="btnText">Kirim Pengajuan</span>
+                <span id="loadingSpinner" class="hidden animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full"></span>
+              </button>
+            </form>
+            <div id="berkasSuccessMsg" class="hidden mt-4 text-green-700 text-center font-semibold bg-green-50 py-3 px-4 rounded-lg border border-green-200">
+              ✓ Pengajuan berhasil dikirim! Data masuk ke Google Spreadsheet prodi.
+            </div>
+            <div id="berkasErrorMsg" class="hidden mt-4 text-red-700 text-center font-semibold bg-red-50 py-3 px-4 rounded-lg border border-red-200">
+              Gagal mengirim. Coba lagi atau hubungi admin.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== KARYA ===== -->
+    <section id="karya" class="section-block">
+      <div class="max-w-6xl mx-auto px-4">
+        <p class="section-label text-xs font-semibold text-center mb-3">JIKOM KARYA</p>
+        <h2 class="text-4xl md:text-5xl font-extrabold text-center text-slate-900 leading-tight">Portofolio Digital<br/>Mahasiswa JIKOM</h2>
+        <p class="text-center text-slate-500 mt-4 max-w-3xl mx-auto">Galeri prestasi dan karya mahasiswa yang dapat disaring per kategori.</p>
+        <div class="flex flex-wrap justify-center gap-2 mt-8 mb-8 text-sm">
+          <button class="tab-btn active px-4 py-1.5 rounded-lg clickable" data-filter="all">Semua</button>
+          <button class="tab-btn px-4 py-1.5 rounded-lg clickable" data-filter="artikel">Artikel</button>
+          <button class="tab-btn px-4 py-1.5 rounded-lg clickable" data-filter="video">Video</button>
+          <button class="tab-btn px-4 py-1.5 rounded-lg clickable" data-filter="desain">Desain</button>
+          <button class="tab-btn px-4 py-1.5 rounded-lg clickable" data-filter="podcast">Podcast</button>
+        </div>
+        <div id="karyaGrid" class="grid md:grid-cols-3 gap-4 content-transition">
+          <article data-kind="video" class="showcase-item card-lift bg-white border rounded-2xl overflow-hidden"><div class="h-32 bg-gradient-to-br from-orange-200 to-orange-100"></div><div class="p-4"><h3 class="font-semibold">Dokumenter: Kehidupan Nelayan Kupang</h3><p class="text-xs text-slate-500 mt-1">oleh Maria Fernanda</p><a href="#" class="text-primary text-sm font-semibold mt-3 inline-block clickable">Lihat Karya</a></div></article>
+          <article data-kind="artikel" class="showcase-item card-lift bg-white border rounded-2xl overflow-hidden"><div class="h-32 bg-gradient-to-br from-green-200 to-green-100"></div><div class="p-4"><h3 class="font-semibold">Opini: Transformasi Digital di NTT</h3><p class="text-xs text-slate-500 mt-1">oleh Yohanes Bere</p><a href="#" class="text-primary text-sm font-semibold mt-3 inline-block clickable">Lihat Karya</a></div></article>
+          <article data-kind="desain" class="showcase-item card-lift bg-white border rounded-2xl overflow-hidden"><div class="h-32 bg-gradient-to-br from-yellow-100 to-yellow-50"></div><div class="p-4"><h3 class="font-semibold">Poster Kampanye Literasi Digital</h3><p class="text-xs text-slate-500 mt-1">oleh Christina Lopo</p><a href="#" class="text-primary text-sm font-semibold mt-3 inline-block clickable">Lihat Karya</a></div></article>
+          <article data-kind="podcast" class="showcase-item card-lift bg-white border rounded-2xl overflow-hidden"><div class="h-32 bg-gradient-to-br from-purple-200 to-purple-100"></div><div class="p-4"><h3 class="font-semibold">Podcast: Suara Mahasiswa JIKOM Ep.5</h3><p class="text-xs text-slate-500 mt-1">oleh Rafael Taneo</p><a href="#" class="text-primary text-sm font-semibold mt-3 inline-block clickable">Lihat Karya</a></div></article>
+          <article data-kind="desain" class="showcase-item card-lift bg-white border rounded-2xl overflow-hidden"><div class="h-32 bg-gradient-to-br from-blue-200 to-blue-100"></div><div class="p-4"><h3 class="font-semibold">Infografis: Statistik Medsos Gen-Z NTT</h3><p class="text-xs text-slate-500 mt-1">oleh Agustina Kale</p><a href="#" class="text-primary text-sm font-semibold mt-3 inline-block clickable">Lihat Karya</a></div></article>
+          <article data-kind="video" class="showcase-item card-lift bg-white border rounded-2xl overflow-hidden"><div class="h-32 bg-gradient-to-br from-red-100 to-orange-100"></div><div class="p-4"><h3 class="font-semibold">Video Essay: Budaya Ikat Timor</h3><p class="text-xs text-slate-500 mt-1">oleh Dominikus Luan</p><a href="#" class="text-primary text-sm font-semibold mt-3 inline-block clickable">Lihat Karya</a></div></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== EVENT ===== -->
+    <section id="event" class="section-block bg-slate-50">
+      <div class="max-w-6xl mx-auto px-4">
+        <p class="section-label text-xs font-semibold text-center mb-3">JIKOM EVENT</p>
+        <h2 class="text-4xl md:text-5xl font-extrabold text-center text-slate-900 leading-tight">Jadwal Kegiatan dan<br/>Pengumuman Prodi</h2>
+        <p class="text-center text-slate-500 mt-4 max-w-3xl mx-auto">Pantau semua jadwal kegiatan prodi agar tidak ada informasi yang terlewat.</p>
+        <div class="grid lg:grid-cols-[1fr_1.45fr] gap-6 mt-10">
+          <div class="bg-white border rounded-2xl p-6">
+            <div class="flex items-center justify-between mb-4">
+              <button id="prevMonth" type="button" class="tab-btn px-3 py-1 rounded-lg clickable text-sm">← Sebelumnya</button>
+              <h3 id="calendarTitle" class="text-center font-semibold text-sm"></h3>
+              <button id="nextMonth" type="button" class="tab-btn px-3 py-1 rounded-lg clickable text-sm">Berikutnya →</button>
+            </div>
+            <div id="calendarDays" class="grid grid-cols-7 gap-1 text-center text-xs text-slate-500"></div>
+          </div>
+          <div class="bg-white border rounded-2xl p-4">
+            <h3 class="font-semibold mb-4">Event Mendatang</h3>
+            <div id="eventList" class="space-y-3"></div>
+            <div class="mt-6 border-t pt-4">
+              <div class="flex items-center justify-between mb-3">
+                <p class="font-semibold text-sm">Progress Persiapan Event</p>
+                <span id="checkProgress" class="text-xs font-semibold text-primary">0/4 selesai</span>
+              </div>
+              <div id="checkList" class="space-y-2 text-sm">
+                <button type="button" class="check-item w-full text-left flex items-center gap-2 p-2 rounded-lg hover:bg-slate-50 clickable"><span class="check-mark w-5 h-5 rounded-full border border-slate-300 flex items-center justify-center text-[11px]"></span>Finalisasi konsep acara</button>
+                <button type="button" class="check-item w-full text-left flex items-center gap-2 p-2 rounded-lg hover:bg-slate-50 clickable"><span class="check-mark w-5 h-5 rounded-full border border-slate-300 flex items-center justify-center text-[11px]"></span>Konfirmasi narasumber</button>
+                <button type="button" class="check-item w-full text-left flex items-center gap-2 p-2 rounded-lg hover:bg-slate-50 clickable"><span class="check-mark w-5 h-5 rounded-full border border-slate-300 flex items-center justify-center text-[11px]"></span>Publikasi poster dan media sosial</button>
+                <button type="button" class="check-item w-full text-left flex items-center gap-2 p-2 rounded-lg hover:bg-slate-50 clickable"><span class="check-mark w-5 h-5 rounded-full border border-slate-300 flex items-center justify-center text-[11px]"></span>Gladi resik pelaksanaan</button>
+              </div>
+              <button id="nextCheckBtn" type="button" class="mt-4 w-full bg-primary text-white py-2 rounded-lg text-sm font-semibold clickable">Tandai Langkah Berikutnya</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PUBLISH ===== -->
+    <section id="publish" class="section-block">
+      <div class="max-w-6xl mx-auto px-4">
+        <p class="section-label text-xs font-semibold text-center mb-3">JIKOM PUBLISH</p>
+        <h2 class="text-4xl md:text-5xl font-extrabold text-center text-slate-900 leading-tight">Suara Mahasiswa,<br/>Ditulis oleh Mahasiswa</h2>
+        <p class="text-center text-slate-500 mt-4 max-w-3xl mx-auto">Publikasi berita kampus, opini, dan liputan jurnalistik mahasiswa.</p>
+        <div class="grid md:grid-cols-3 gap-4 mt-10">
+          <article class="card-lift bg-white rounded-2xl border overflow-hidden"><div class="h-28 bg-orange-100"></div><div class="p-5"><h3 class="font-semibold text-xl">Undana Gelar Seminar Nasional Jurnalisme Digital 2025</h3><p class="text-sm text-slate-500 mt-3">Program Studi Ilmu Komunikasi FISIP Undana menggelar seminar nasional bertema Tantangan Jurnalisme di Era AI.</p><a href="#" class="text-primary font-semibold text-sm mt-4 inline-block clickable">Baca Selengkapnya</a></div></article>
+          <article class="card-lift bg-white rounded-2xl border overflow-hidden"><div class="h-28 bg-green-100"></div><div class="p-5"><h3 class="font-semibold text-xl">Opini: Mengapa Literasi Media Penting untuk Gen-Z NTT?</h3><p class="text-sm text-slate-500 mt-3">Kemampuan memilah informasi digital menjadi keterampilan penting mahasiswa komunikasi.</p><a href="#" class="text-primary font-semibold text-sm mt-4 inline-block clickable">Baca Selengkapnya</a></div></article>
+          <article class="card-lift bg-white rounded-2xl border overflow-hidden"><div class="h-28 bg-yellow-100"></div><div class="p-5"><h3 class="font-semibold text-xl">Liputan Khusus: Perjalanan Alumni JIKOM di Media Nasional</h3><p class="text-sm text-slate-500 mt-3">Kisah alumni yang berhasil meniti karier profesional di berbagai media nasional.</p><a href="#" class="text-primary font-semibold text-sm mt-4 inline-block clickable">Baca Selengkapnya</a></div></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== BELAJAR ===== -->
+    <section id="belajar" class="section-block bg-slate-50">
+      <div class="max-w-6xl mx-auto px-4">
+        <p class="section-label text-xs font-semibold text-center mb-3">JIKOM BELAJAR</p>
+        <h2 class="text-4xl md:text-5xl font-extrabold text-center text-slate-900 leading-tight">Semua Sumber Belajar<br/>dalam Satu Tempat</h2>
+        <p class="text-center text-slate-500 mt-4 max-w-3xl mx-auto">Akses template, modul kuliah, dan tutorial tools digital gratis untuk mahasiswa JIKOM.</p>
+        <div class="flex flex-wrap justify-center gap-2 mt-8 mb-8 text-sm">
+          <button class="tab-btn active px-4 py-1.5 rounded-lg clickable belajar-tab" data-belajar="template">Template Canva</button>
+          <button class="tab-btn px-4 py-1.5 rounded-lg clickable belajar-tab" data-belajar="modul">Modul Kuliah</button>
+          <button class="tab-btn px-4 py-1.5 rounded-lg clickable belajar-tab" data-belajar="tutorial">Tutorial Digital</button>
+        </div>
+        <div id="belajarGrid" class="grid md:grid-cols-4 gap-4 content-transition"></div>
+      </div>
+    </section>
+
+    <!-- ===== TESTIMONI ===== -->
+    <section class="section-block">
+      <div class="max-w-6xl mx-auto px-4">
+        <p class="section-label text-xs font-semibold text-center mb-3">TESTIMONI</p>
+        <h2 class="text-4xl md:text-5xl font-extrabold text-center text-slate-900">Kata Mereka tentang JIKOM Space</h2>
+        <p class="text-center text-slate-500 mt-4">Pengalaman mahasiswa dan alumni menggunakan platform ini.</p>
+        <div class="grid md:grid-cols-3 gap-4 mt-10">
+          <article class="card-lift bg-white border rounded-2xl p-6"><p class="text-slate-600 text-sm">"JIKOM Space membantu saya mengurus berkas magang lebih cepat dan rapi. Tidak perlu bolak-balik ke kampus!"</p><div class="mt-6 flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm">MF</div><div><p class="font-semibold text-sm">Maria Fernanda</p><p class="text-xs text-slate-500">Mahasiswa Angkatan 2022</p></div></div></article>
+          <article class="card-lift bg-white border rounded-2xl p-6"><p class="text-slate-600 text-sm">"Portofolio di JIKOM Karya membuat karya saya lebih mudah dilihat dosen dan mitra industri."</p><div class="mt-6 flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-orange-400 text-white flex items-center justify-center font-bold text-sm">YB</div><div><p class="font-semibold text-sm">Yohanes Bere</p><p class="text-xs text-slate-500">Mahasiswa Angkatan 2021</p></div></div></article>
+          <article class="card-lift bg-white border rounded-2xl p-6"><p class="text-slate-600 text-sm">"Fitur jadwal event sangat membantu saya mengatur prioritas kegiatan akademik setiap bulan."</p><div class="mt-6 flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-orange-500 text-white flex items-center justify-center font-bold text-sm">CL</div><div><p class="font-semibold text-sm">Christina Lopo</p><p class="text-xs text-slate-500">Alumni 2020</p></div></div></article>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer id="kontak" class="bg-[#0c1c32] text-white pt-14 pb-6">
+    <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-4 gap-8">
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+          <img src="logo undana.png" alt="Logo Undana" class="w-9 h-9 rounded-lg object-contain" />
+          <div><p class="font-bold">JIKOM Space</p><p class="text-xs text-slate-400">Universitas Nusa Cendana</p></div>
+        </div>
+        <p class="text-sm text-slate-300">Ruang digital mahasiswa JIKOM Undana untuk layanan akademik dan pamer prestasi.</p>
+        <p class="text-sm text-slate-300 mt-4">Jl. Adisucipto Penfui, Kupang, NTT 85001</p>
+        <p class="text-sm text-slate-300">(0380) 881580</p>
+        <p class="text-sm text-slate-300">jikom@undana.ac.id</p>
+      </div>
+      <div><h4 class="font-semibold mb-4">Fitur</h4><ul class="space-y-2 text-sm text-slate-300"><li><a href="#berkas" class="hover:text-primary transition-colors">JIKOM Berkas</a></li><li><a href="#karya" class="hover:text-primary transition-colors">JIKOM Karya</a></li><li><a href="#publish" class="hover:text-primary transition-colors">JIKOM Publish</a></li><li><a href="#event" class="hover:text-primary transition-colors">JIKOM Event</a></li><li><a href="#belajar" class="hover:text-primary transition-colors">JIKOM Belajar</a></li></ul></div>
+      <div><h4 class="font-semibold mb-4">Program Studi</h4><ul class="space-y-2 text-sm text-slate-300"><li>Profil Prodi</li><li>Visi dan Misi</li><li>Kurikulum</li><li>Dosen</li></ul></div>
+      <div><h4 class="font-semibold mb-4">Universitas</h4><ul class="space-y-2 text-sm text-slate-300"><li><a href="https://undana.ac.id" target="_blank" class="hover:text-primary transition-colors">Website Undana</a></li><li><a href="https://fisip.undana.ac.id" target="_blank" class="hover:text-primary transition-colors">FISIP Undana</a></li><li><a href="https://siakad.undana.ac.id" target="_blank" class="hover:text-primary transition-colors">SIAKAD</a></li><li>E-Learning</li></ul></div>
+    </div>
+    <div class="mt-10 border-t border-slate-700 pt-4 text-xs text-slate-400">
+      <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row gap-2 md:items-center md:justify-between">
+        <p>© 2026 JIKOM Space | Prodi Ilmu Komunikasi Universitas Nusa Cendana</p>
+        <p>Kebijakan Privasi · Syarat dan Ketentuan</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== SEMUA JAVASCRIPT ===== -->
+  <script>
+    // ── 1. GANTI URL INI dengan URL Web App dari Apps Script kamu ──
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyvdtFCYlrfy0nvNO44PVwLBsCUQTqjRHfjvkFBY695sCRvB45pFFlddcZVrDwqKk1-Lg/exec';
+
+    // ── 2. MOBILE MENU ──
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+    });
+
+    // ── 3. COUNTER ANIMASI ──
+    const animated = new WeakSet();
+    const animateCounter = (el) => {
+      if (animated.has(el)) return;
+      animated.add(el);
+      const target = Number(el.dataset.target || 0);
+      const start = performance.now();
+      const step = (now) => {
+        const t = Math.min((now - start) / 1200, 1);
+        const eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = Math.floor(target * eased).toLocaleString('en-US');
+        if (t < 1) requestAnimationFrame(step);
+        else el.textContent = target.toLocaleString('en-US');
+      };
+      requestAnimationFrame(step);
+    };
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) { animateCounter(entry.target); counterObserver.unobserve(entry.target); }
+      });
+    }, { threshold: 0.45 });
+    document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+
+    // ── 4. TOMBOL JENIS SURAT (sync dengan select) ──
+    const suratBtns = document.querySelectorAll('.surat-btn');
+    const jenisSelect = document.querySelector('#berkasForm select[name="jenis"]');
+    suratBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        suratBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        if (jenisSelect) jenisSelect.value = btn.dataset.surat;
+      });
+    });
+
+    // ── 5. FORM SUBMIT → GOOGLE SHEETS ──
+    const berkasForm = document.getElementById('berkasForm');
+    const successMsg = document.getElementById('berkasSuccessMsg');
+    const errorMsg = document.getElementById('berkasErrorMsg');
+    const kirimBtn = document.getElementById('kirimBtn');
+    const btnText = document.getElementById('btnText');
+    const spinner = document.getElementById('loadingSpinner');
+
+    berkasForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // Ambil nilai dari elemen form
+      const nama       = berkasForm.querySelector('[name="nama"]').value.trim();
+      const nim        = berkasForm.querySelector('[name="nim"]').value.trim();
+      const email      = berkasForm.querySelector('[name="email"]').value.trim();
+      const jenis      = berkasForm.querySelector('[name="jenis"]').value;
+      const keterangan = berkasForm.querySelector('[name="keterangan"]').value.trim();
+
+      if (!nama || !nim || !email || !jenis) {
+        alert('Mohon lengkapi semua field yang wajib diisi (*).');
+        return;
+      }
+
+      // Loading state
+      kirimBtn.disabled = true;
+      btnText.textContent = 'Mengirim...';
+      spinner.classList.remove('hidden');
+      successMsg.classList.add('hidden');
+      errorMsg.classList.add('hidden');
+
+      // Kirim via iframe (paling reliable untuk Apps Script)
+      const iframe = document.createElement('iframe');
+      iframe.name = 'jikom_iframe_' + Date.now();
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+
+      const hiddenForm = document.createElement('form');
+      hiddenForm.method = 'POST';
+      hiddenForm.action = SCRIPT_URL;
+      hiddenForm.target = iframe.name;
+
+      [['nama', nama], ['nim', nim], ['email', email], ['jenis', jenis], ['keterangan', keterangan]].forEach(([k, v]) => {
+        const inp = document.createElement('input');
+        inp.type = 'hidden'; inp.name = k; inp.value = v;
+        hiddenForm.appendChild(inp);
+      });
+
+      document.body.appendChild(hiddenForm);
+      hiddenForm.submit();
+
+      // Setelah 3 detik, tampilkan sukses
+      setTimeout(() => {
+        berkasForm.reset();
+        document.body.removeChild(hiddenForm);
+        document.body.removeChild(iframe);
+        suratBtns.forEach((b, i) => { b.classList.toggle('active', i === 0); });
+        if (jenisSelect) jenisSelect.value = '';
+        successMsg.classList.remove('hidden');
+        kirimBtn.disabled = false;
+        btnText.textContent = 'Kirim Pengajuan';
+        spinner.classList.add('hidden');
+        setTimeout(() => successMsg.classList.add('hidden'), 6000);
+      }, 3000);
+    });
+
+    // ── 6. FILTER KARYA ──
+    const karyaGrid = document.getElementById('karyaGrid');
+    const karyaItems = document.querySelectorAll('.showcase-item');
+    document.querySelectorAll('[data-filter]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        karyaGrid.classList.add('content-hidden');
+        setTimeout(() => {
+          const filter = btn.dataset.filter;
+          karyaItems.forEach(item => {
+            item.style.display = filter === 'all' || item.dataset.kind === filter ? '' : 'none';
+          });
+          karyaGrid.classList.remove('content-hidden');
+        }, 160);
+      });
+    });
+
+    // ── 7. BELAJAR TABS ──
+    const belajarData = {
+      template: [
+        { title: 'Template CV Profesional', desc: 'Desain CV modern untuk lamaran kerja', bg: 'from-orange-200 to-orange-100' },
+        { title: 'Template Poster Seminar', desc: 'Layout poster kegiatan akademik', bg: 'from-orange-100 to-amber-100' },
+        { title: 'Template Instagram Feed', desc: 'Format konten prodi yang konsisten', bg: 'from-yellow-100 to-orange-100' },
+        { title: 'Template Presentasi Skripsi', desc: 'Template sidang yang rapi dan jelas', bg: 'from-orange-200 to-yellow-100' }
+      ],
+      modul: [
+        { title: 'Modul Dasar Jurnalistik', desc: 'Konsep dasar liputan dan penulisan', bg: 'from-green-200 to-green-100' },
+        { title: 'Modul Public Relations', desc: 'Strategi komunikasi lembaga', bg: 'from-green-100 to-emerald-100' },
+        { title: 'Modul Komunikasi Digital', desc: 'Kampanye media sosial terukur', bg: 'from-teal-100 to-green-100' },
+        { title: 'Modul Metode Riset', desc: 'Teknik riset kuantitatif dan kualitatif', bg: 'from-emerald-100 to-teal-100' }
+      ],
+      tutorial: [
+        { title: 'Tutorial Editing Video', desc: 'Dasar editing untuk konten kampus', bg: 'from-blue-200 to-blue-100' },
+        { title: 'Tutorial Canva Prodi', desc: 'Desain konten visual yang seragam', bg: 'from-blue-100 to-cyan-100' },
+        { title: 'Tutorial Podcast', desc: 'Produksi audio untuk pamer karya', bg: 'from-sky-100 to-blue-100' },
+        { title: 'Tutorial Presentasi', desc: 'Teknik presentasi akademik efektif', bg: 'from-cyan-100 to-sky-100' }
+      ]
+    };
+    const belajarGrid = document.getElementById('belajarGrid');
+    const renderBelajar = (key) => {
+      belajarGrid.classList.add('content-hidden');
+      setTimeout(() => {
+        belajarGrid.innerHTML = belajarData[key].map(item => `
+          <article class="card-lift bg-white rounded-2xl border p-5 min-h-[220px] flex flex-col">
+            <div class="h-10 w-10 rounded-lg bg-gradient-to-br ${item.bg} mb-4"></div>
+            <h3 class="font-semibold">${item.title}</h3>
+            <p class="text-sm text-slate-500 mt-2 flex-1">${item.desc}</p>
+            <button class="mt-4 w-full bg-primary text-white rounded-lg py-2 text-sm font-semibold clickable hover:bg-orange-600">Unduh</button>
+          </article>`).join('');
+        belajarGrid.classList.remove('content-hidden');
+      }, 160);
+    };
+    renderBelajar('template');
+    document.querySelectorAll('.belajar-tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.belajar-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderBelajar(btn.dataset.belajar);
+      });
+    });
+
+    // ── 8. KALENDER EVENT ──
+    const monthData = [
+      {
+        title: 'April 2026', firstOffset: 3, days: 30,
+        highlights: { 17: 'bg-primary text-white', 20: 'bg-yellow-100', 25: 'bg-yellow-100' },
+        events: [
+          { title: 'Seminar Nasional Komunikasi Digital', info: '20 Apr 2026 · Aula FISIP Undana', badge: 'Seminar', badgeClass: 'bg-red-100 text-red-600' },
+          { title: 'Deadline Proposal KKN', info: '25 Apr 2026 · Online via SIAKAD', badge: 'Deadline', badgeClass: 'bg-red-100 text-red-600' },
+          { title: 'Lomba Jurnalistik Mahasiswa', info: '27 Apr 2026 · Gedung Rektorat', badge: 'Lomba', badgeClass: 'bg-yellow-100 text-yellow-700' }
+        ]
+      },
+      {
+        title: 'Mei 2026', firstOffset: 5, days: 31,
+        highlights: { 5: 'bg-primary text-white', 12: 'bg-yellow-100', 28: 'bg-yellow-100' },
+        events: [
+          { title: 'Pelatihan Public Speaking', info: '5 Mei 2026 · Studio Komunikasi', badge: 'Workshop', badgeClass: 'bg-green-100 text-green-700' },
+          { title: 'Batas Revisi Skripsi', info: '12 Mei 2026 · Portal Akademik', badge: 'Deadline', badgeClass: 'bg-red-100 text-red-600' },
+          { title: 'Pameran Karya Mahasiswa', info: '28 Mei 2026 · Hall FISIP', badge: 'Pameran', badgeClass: 'bg-yellow-100 text-yellow-700' }
+        ]
+      }
+    ];
+    let monthIndex = 0;
+    const weekday = ['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
+    const renderCalendar = () => {
+      const m = monthData[monthIndex];
+      document.getElementById('calendarTitle').textContent = m.title;
+      const cells = [];
+      weekday.forEach(d => cells.push(`<span class="font-medium py-1">${d}</span>`));
+      for (let i = 0; i < m.firstOffset; i++) cells.push('<span></span>');
+      for (let d = 1; d <= m.days; d++) {
+        const cls = m.highlights[d] ? `${m.highlights[d]} rounded-lg py-1 font-semibold` : 'py-1';
+        cells.push(`<span class="${cls}">${d}</span>`);
+      }
+      document.getElementById('calendarDays').innerHTML = cells.join('');
+      document.getElementById('eventList').innerHTML = m.events.map(ev => `
+        <div class="border rounded-xl p-3 flex items-center justify-between gap-3">
+          <div><p class="font-semibold text-sm">${ev.title}</p><p class="text-xs text-slate-500 mt-0.5">${ev.info}</p></div>
+          <span class="text-xs px-3 py-1 rounded-full whitespace-nowrap ${ev.badgeClass}">${ev.badge}</span>
+        </div>`).join('');
+    };
+    document.getElementById('prevMonth').addEventListener('click', () => { monthIndex = (monthIndex - 1 + monthData.length) % monthData.length; renderCalendar(); });
+    document.getElementById('nextMonth').addEventListener('click', () => { monthIndex = (monthIndex + 1) % monthData.length; renderCalendar(); });
+    renderCalendar();
+
+    // ── 9. CHECKLIST EVENT ──
+    const checkItems = Array.from(document.querySelectorAll('.check-item'));
+    const checkMarks = Array.from(document.querySelectorAll('.check-mark'));
+    const checkProgress = document.getElementById('checkProgress');
+    const nextCheckBtn = document.getElementById('nextCheckBtn');
+    let completedCount = 0;
+    const renderChecklist = () => {
+      checkProgress.textContent = `${completedCount}/${checkItems.length} selesai`;
+      checkMarks.forEach((mark, i) => {
+        const done = i < completedCount;
+        mark.textContent = done ? '✓' : '';
+        mark.className = done
+          ? 'check-mark w-5 h-5 rounded-full border border-primary bg-primary text-white flex items-center justify-center text-[11px]'
+          : 'check-mark w-5 h-5 rounded-full border border-slate-300 flex items-center justify-center text-[11px]';
+      });
+      checkItems.forEach((item, i) => {
+        item.classList.toggle('text-slate-400', i < completedCount);
+        item.classList.toggle('line-through', i < completedCount);
+      });
+      nextCheckBtn.textContent = completedCount >= checkItems.length ? 'Semua Langkah Selesai ✓' : 'Tandai Langkah Berikutnya';
+      nextCheckBtn.disabled = completedCount >= checkItems.length;
+      nextCheckBtn.classList.toggle('opacity-60', completedCount >= checkItems.length);
+    };
+    nextCheckBtn.addEventListener('click', () => { if (completedCount < checkItems.length) { completedCount++; renderChecklist(); } });
+    checkItems.forEach((item, idx) => {
+      item.addEventListener('click', () => {
+        if (idx === completedCount) completedCount++;
+        else if (idx + 1 === completedCount) completedCount--;
+        renderChecklist();
+      });
+    });
+    renderChecklist();
+  </script>
+</body>
+</html>
